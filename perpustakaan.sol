@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity 0.8.13;
 
 contract Perpustakaan {
-    address public admin=0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
+    address public admin =0x5B38Da6a701c568545dCfcB03FcB875f56beddC4;
     
     struct Book {
         uint256 kodeIsbn;
@@ -26,6 +26,12 @@ contract Perpustakaan {
     
     constructor() {
         admin = msg.sender;
+    }
+
+    function setAdmin(address _admin) public {
+        require(msg.sender == admin, "Only current admin can set a new admin");
+        require(_admin != address(0), "Invalid admin address");
+        admin = _admin;
     }
 
     function addBook(uint256 _kodeIsbn, string calldata _judul, uint16 _tahun, string calldata _penulis) public onlyAdmin {
@@ -53,7 +59,7 @@ contract Perpustakaan {
         books[pendingBookData.kodeIsbn] = pendingBookData;
         jumlahBuku++;
 
-            // Reset data buku yang pending ke nilai awal
+        // Reset data buku yang pending ke nilai awal
         pendingBookData = Book({
             kodeIsbn: 0,
             judulBuku: "",
