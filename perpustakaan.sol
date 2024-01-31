@@ -46,7 +46,7 @@ contract Perpustakaan {
         });
 
         // menandakan ada data yang pending
-        isBookUpdatePending = true;
+        isBookUpdatePending = false;
     }
 
     function updateBook() public onlyAdmin {
